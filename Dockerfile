@@ -18,15 +18,15 @@ RUN chmod +x /usr/local/sbin/start.sh
 
 RUN apk add --no-cache wget bash
 
-RUN mkdir /opt \
+RUN mkdir -p /opt \
   && wget -q -O - ${KAFKA_MIRROR}/dist//kafka/${KAFKA_VERSION}/kafka_${KAFKA_SCALA_VERSION}-${KAFKA_VERSION}.tgz  | tar -xzf - -C /opt \
   && mv /opt/kafka_* $KAFKA_HOME \
   && chown -R root:root $KAFKA_HOME
 
 RUN addgroup -S kafka \
   && adduser -h /var/lib/kafka -G kafka -S -H -s /sbin/nologin kafka \
-  && mkdir /var/lib/kafka && chown -R kafka:kafka /var/lib/kafka \
-  && mkdir /var/log/kafka && chown -R kafka:kafka /var/log/kafka
+  && mkdir -p /var/lib/kafka && chown -R kafka:kafka /var/lib/kafka \
+  && mkdir -p /var/log/kafka && chown -R kafka:kafka /var/log/kafka
 
 EXPOSE 9092
 
