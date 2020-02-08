@@ -19,7 +19,7 @@ RUN chmod +x /usr/local/sbin/start.sh
 RUN apk add --no-cache wget bash
 
 RUN mkdir -p /opt \
-  && wget -q -O - ${KAFKA_MIRROR}/dist//kafka/${KAFKA_VERSION}/kafka_${KAFKA_SCALA_VERSION}-${KAFKA_VERSION}.tgz  | tar -xzf - -C /opt \
+  && wget -q -O - ${KAFKA_MIRROR}/dist//kafka/${KAFKA_VERSION}/kafka_${KAFKA_SCALA_VERSION}-${KAFKA_VERSION}.tgz  | tar -xvzf - -C /opt \
   && mv /opt/kafka_* $KAFKA_HOME \
   && chown -R root:root $KAFKA_HOME
 
