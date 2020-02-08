@@ -4,7 +4,7 @@
 
 FROM openjdk:8-jre-alpine
 
-ARG KAFKA_VERSION=2.1.0
+ARG KAFKA_VERSION=2.4.0
 ARG KAFKA_MIRROR=http://www-eu.apache.org
 ARG KAFKA_SCALA_VERSION=2.12
 
