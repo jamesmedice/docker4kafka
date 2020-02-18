@@ -1,4 +1,3 @@
-# 
 # Author @Tiago Medice
 # Apache Kafka
 
