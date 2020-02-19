@@ -1,5 +1,5 @@
-# Author @Tiago Medice #
-# Apache Kafka         #
+### Author @Tiago Medice ###
+### Apache Kafka         ###
 
 FROM openjdk:8-jre-alpine
 
