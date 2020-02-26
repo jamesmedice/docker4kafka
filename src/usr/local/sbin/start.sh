@@ -58,6 +58,49 @@ do
   fi
 done
 
+# *********** Creating Kafka Topics**************
+#kafka create topics
+# Expected format:
+#   name:partitions:replicas:cleanup.policy
+IFS="${KAFKA_CREATE_TOPICS_SEPARATOR-,}"; for topicToCreate in $KAFKA_CREATE_TOPICS; do
+    echo "creating topics: $topicToCreate"
+    IFS=':' read -r -a topicConfig <<< "$topicToCreate"
+    config=
+    if [ -n "${topicConfig[3]}" ]; then
+        config="--config=cleanup.policy=${topicConfig[3]}"
+    fi
+
+    COMMAND="JMX_PORT='' ${KAFKA_HOME}/bin/kafka-topics.sh \\
+		--create \\
+		--zookeeper ${KAFKA_ZOOKEEPER_CONNECT} \\
+		--topic ${topicConfig[0]} \\
+		--partitions ${topicConfig[1]} \\
+		--replication-factor ${topicConfig[2]} \\
+		${config} \\
+		${KAFKA_0_10_OPTS} &"
+    eval "${COMMAND}"
+done
+
+
+# *********** Creating Default Kafka Topics**************
+#kafka create default topics
+
+source ./config
+
+for t in ${KAFKA_DEFAULT_TOPICS[@]}; do 
+  echo "[INSTALLATION-INFO] Creating Kafka Topic : ${t} "
+  ${KAFKA_HOME}/bin/kafka-topics.sh --create --zookeeper ${KAFKA_ZOOKEEPER_CONNECT} --replication-factor ${REPLICATION_FACTOR} --partitions ${PARTITIONS} --topic ${t} --if-not-exists
+done
+
+# *********** Showing Kafka Topics**************
+#Reference: split string into an array in bash
+
+for t in ${KAFKA_DEFAULT_TOPICS[@]}; do 
+  echo "[INSTALLATION-INFO] Describing Kafka Topic : ${t} "
+  ${KAFKA_HOME}/bin/kafka-topics.sh --describe --zookeeper ${ZOOKEEPER_NAME}:2181  --topic ${t}
+done
+
+
 # Logging config
 sed -i "s/^kafka\.logs\.dir=.*$/kafka\.logs\.dir=\/var\/log\/kafka/" /opt/kafka/config/log4j.properties
 export LOG_DIR=/var/log/kafka
