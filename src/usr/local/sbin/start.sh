@@ -89,7 +89,7 @@ source ./config
 
 for t in ${KAFKA_DEFAULT_TOPICS[@]}; do 
   echo "[INSTALLATION-INFO] Creating Kafka Topic : ${t} "
-  ${KAFKA_HOME}/bin/kafka-topics.sh --create --zookeeper ${KAFKA_ZOOKEEPER_CONNECT} --replication-factor ${REPLICATION_FACTOR} --partitions ${PARTITIONS} --topic ${t} --if-not-exists
+  ${KAFKA_HOME}/bin/kafka-topics.sh --create --zookeeper ${KAFKA_ZOOKEEPER_CONNECT} --replication-factor 1 --partitions 5 --topic ${t} --if-not-exists
 done
 
 # *********** Showing Kafka Topics**************
