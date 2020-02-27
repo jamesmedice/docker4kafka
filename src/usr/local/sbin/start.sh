@@ -81,36 +81,6 @@ IFS="${KAFKA_CREATE_TOPICS_SEPARATOR-,}"; for topicToCreate in $KAFKA_CREATE_TOP
     eval "${COMMAND}"
 done
 
-
-# *********** Creating Default Kafka Topics**************
-#kafka create default topics
-KAFKA_DEFAULT_TOPICS=(
-"TP_PRODUCER_1"
-"TP_PRODUCER_2"
-"TP_PRODUCER_3"
-"TP_PRODUCER_4"
-"TP_PRODUCER_5"
-"TP_CONSUMER_1"
-"TP_CONSUMER_2"
-"TP_CONSUMER_3"
-"TP_CONSUMER_4"
-"TP_CONSUMER_5"
-)
-
-for t in ${KAFKA_DEFAULT_TOPICS[@]}; do 
-  echo "[INSTALLATION-INFO] Creating Kafka Topic : ${t} "
-  ${KAFKA_HOME}/bin/kafka-topics.sh --create --zookeeper ${KAFKA_ZOOKEEPER_CONNECT} --replication-factor 1 --partitions 5 --topic ${t} --if-not-exists
-done
-
-# *********** Showing Kafka Topics**************
-#Reference: split string into an array in bash
-
-for t in ${KAFKA_DEFAULT_TOPICS[@]}; do 
-  echo "[INSTALLATION-INFO] Describing Kafka Topic : ${t} "
-  ${KAFKA_HOME}/bin/kafka-topics.sh --describe --zookeeper ${ZOOKEEPER_NAME}:2181  --topic ${t}
-done
-
-
 # Logging config
 sed -i "s/^kafka\.logs\.dir=.*$/kafka\.logs\.dir=\/var\/log\/kafka/" /opt/kafka/config/log4j.properties
 export LOG_DIR=/var/log/kafka
