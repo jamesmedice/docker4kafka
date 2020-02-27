@@ -84,8 +84,18 @@ done
 
 # *********** Creating Default Kafka Topics**************
 #kafka create default topics
-
-source ./config
+KAFKA_DEFAULT_TOPICS=(
+"TP_PRODUCER_1"
+"TP_PRODUCER_2"
+"TP_PRODUCER_3"
+"TP_PRODUCER_4"
+"TP_PRODUCER_5"
+"TP_CONSUMER_1"
+"TP_CONSUMER_2"
+"TP_CONSUMER_3"
+"TP_CONSUMER_4"
+"TP_CONSUMER_5"
+)
 
 for t in ${KAFKA_DEFAULT_TOPICS[@]}; do 
   echo "[INSTALLATION-INFO] Creating Kafka Topic : ${t} "
